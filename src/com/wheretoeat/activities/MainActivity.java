@@ -27,16 +27,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
 		viewPager = (ViewPager) findViewById(R.id.viewPagerCategory);
 		PagerTabStrip page = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-		//page.setTextSpacing(10);
-		// actionBar = getActionBar();
-		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
 		viewPager.setOnPageChangeListener(pageChangeListener);
 		viewPager.setAdapter(sectionPagerAdapter);
-		// for (int i = 0; i < sectionPagerAdapter.getCount(); i++) {
-		// actionBar.addTab(actionBar.newTab().setText(sectionPagerAdapter.getPageTitle(i)).setTabListener(this));
-		// }
-
-		// actionBar.setSelectedNavigationItem(1);
+		viewPager.setCurrentItem(1);
 	}
 
 	@Override
@@ -56,7 +50,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				Log.d("Exception", "" + e);
 			}
 		}
-
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
