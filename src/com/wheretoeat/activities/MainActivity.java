@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -60,36 +61,48 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		FrameLayout mapFrameLayout = (FrameLayout) findViewById(R.id.map_fragment_container);
 		int titleHeight = page.getHeight();
 		String tag = "out";
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+		LinearLayout.LayoutParams pageParam = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		LinearLayout.LayoutParams mapParam = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		switch (id) {
 		case R.id.imgBtnMap:
 			imgBtn = (ImageButton) v.findViewById(R.id.imgBtnMap);
 			tag = getBtnTag(imgBtn);
 			if (tag.equals("out")) {
-				params.height = mainLayoutHeight - titleHeight;
+				pageParam.height = titleHeight;
+				mapParam.height = mainLayoutHeight - titleHeight;
+				((ImageButton) findViewById(R.id.imgBtnPager)).setVisibility(Button.INVISIBLE);
 				imgBtn.setTag("in");
+				imgBtn.setImageResource(R.drawable.ic_zoom_in);
 			} else {
-				params.height = mainLayoutHeight / 2;
+				((ImageButton) findViewById(R.id.imgBtnPager)).setVisibility(Button.VISIBLE);
+				mapParam.height = mainLayoutHeight / 2;
+				pageParam.height = mainLayoutHeight / 2;
+				imgBtn.setImageResource(R.drawable.ic_zoom_out);
 				imgBtn.setTag("out");
 			}
-			mapFrameLayout.setLayoutParams(params);
-
 			break;
 		case R.id.imgBtnPager:
 			imgBtn = (ImageButton) v.findViewById(R.id.imgBtnPager);
 			tag = getBtnTag(imgBtn);
 			if (tag.equals("out")) {
-				params.height = mainLayoutHeight;
+				pageParam.height = mainLayoutHeight;
+				mapParam.height = 0;
 				imgBtn.setTag("in");
+				imgBtn.setImageResource(R.drawable.ic_zoom_in);
 			} else {
-				params.height = mainLayoutHeight / 2;
+				mapParam.height = mainLayoutHeight / 2;
+				pageParam.height = mainLayoutHeight / 2;
+				imgBtn.setImageResource(R.drawable.ic_zoom_out);
 				imgBtn.setTag("out");
 			}
-			pagerFrameLayout.setLayoutParams(params);
 			break;
 		default:
 			break;
 		}
+
+		pagerFrameLayout.setLayoutParams(pageParam);
+		mapFrameLayout.setLayoutParams(mapParam);
 
 	}
 

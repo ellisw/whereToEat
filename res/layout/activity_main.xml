@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:onClick="onClickZoomOutIn"
-            android:padding="5dp"
             android:src="@drawable/ic_zoom_out" />
     </FrameLayout>
 
@@ -51,7 +50,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:onClick="onClickZoomOutIn"
-            android:padding="5dp"
             android:src="@drawable/ic_zoom_out" />
     </FrameLayout>
 
