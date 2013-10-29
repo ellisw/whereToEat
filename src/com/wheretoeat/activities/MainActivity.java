@@ -1,24 +1,39 @@
 package com.wheretoeat.activities;
 
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.ActionBar.Tab;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ToggleButton;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.wheretoeat.adapters.SectionPagerAdapter;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -28,8 +43,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ViewPager viewPager;
 	ActionBar actionBar;
 	GoogleMap googleMap;
-	MapFragment mapFragment;
+	SupportMapFragment supportMapFragment;
 	PagerTabStrip page;
+	View dialogView;
+	ToggleButton price1;
+	ToggleButton price2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +61,43 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager.setOnPageChangeListener(pageChangeListener);
 		viewPager.setAdapter(sectionPagerAdapter);
 		viewPager.setCurrentItem(1);
+
+		supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+		googleMap = supportMapFragment.getMap();
+
+		markCurrentLocation();
+
+	}
+
+	private void markCurrentLocation() {
+
+		double[] d = getCurrentlocation();
+		LatLng currentLocation = new LatLng(d[0], d[1]);
+
+		googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location")
+				.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
+		googleMap.setMyLocationEnabled(true);
+		googleMap.getUiSettings().setZoomControlsEnabled(false);
+	}
+
+	public double[] getCurrentlocation() {
+		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		List<String> providers = lm.getProviders(true);
+
+		Location l = null;
+		for (int i = 0; i < providers.size(); i++) {
+			l = lm.getLastKnownLocation(providers.get(i));
+			if (l != null)
+				break;
+		}
+		double[] gps = new double[2];
+
+		if (l != null) {
+			gps[0] = l.getLatitude();
+			gps[1] = l.getLongitude();
+		}
+		return gps;
 	}
 
 	@Override
@@ -51,6 +106,51 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_filter) {
+			showFilterDialog();
+		}
+		return true;
+	}
+
+	private void showFilterDialog() {
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		dialogView = inflater.inflate(R.layout.setttings_dialog, null, true);
+		price1 = (ToggleButton) dialogView.findViewById(R.id.price1);
+		price2 = (ToggleButton) dialogView.findViewById(R.id.price2);
+		
+		dialogBuilder.setView(dialogView);
+		dialogBuilder.setTitle("Set the Filter");
+		dialogBuilder.setPositiveButton("Save", dialogOnClickListener);
+		dialogBuilder.setNegativeButton("Cancel", dialogOnClickListener);
+		dialogBuilder.create().show();
+	}
+
+	OnClickListener dialogOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+
+			switch (which) {
+			// Save button
+			case -1:
+				Log.d(TAG, "Saved!");
+				Log.d(TAG, "Price1 :" + price1.isChecked());
+				Log.d(TAG, "Price2 :" + price2.isChecked());
+				break;
+			// Cancel Button
+			case -2:
+				Log.d(TAG, "Cancel!");
+				break;
+
+			default:
+				break;
+			}
+		}
+	};
 
 	public void onClickZoomOutIn(View v) {
 
@@ -137,8 +237,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -149,8 +247,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
