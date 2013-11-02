@@ -1,6 +1,6 @@
 package com.wheretoeat.activities;
 
-import java.util.List;
+import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -10,8 +10,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
@@ -26,15 +24,18 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.ToggleButton;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wheretoeat.adapters.SectionPagerAdapter;
+import com.wheretoeat.helper.GoogleMapHelper;
+import com.wheretoeat.helper.SharedPrefHelper;
+import com.wheretoeat.models.Filters;
+import com.wheretoeat.restclients.YelpClient;
+import com.wheretoeat.restclients.YelpClientApplication;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -46,8 +47,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	SupportMapFragment supportMapFragment;
 	PagerTabStrip page;
 	View dialogView;
+	// Dialog Views
 	ToggleButton price1;
 	ToggleButton price2;
+	ToggleButton price3;
+	ToggleButton price4;
+	Switch swtchShowVisited;
+	Switch swtchOpenNow;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,39 +71,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		googleMap = supportMapFragment.getMap();
 
-		markCurrentLocation();
+		double[] coords = GoogleMapHelper.getCurrentlocation(getBaseContext());
 
-	}
+		GoogleMapHelper.markLocationOnMap(coords, googleMap);
 
-	private void markCurrentLocation() {
-
-		double[] d = getCurrentlocation();
-		LatLng currentLocation = new LatLng(d[0], d[1]);
-
-		googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location")
-				.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
-		googleMap.setMyLocationEnabled(true);
-		googleMap.getUiSettings().setZoomControlsEnabled(false);
-	}
-
-	public double[] getCurrentlocation() {
-		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		List<String> providers = lm.getProviders(true);
-
-		Location l = null;
-		for (int i = 0; i < providers.size(); i++) {
-			l = lm.getLastKnownLocation(providers.get(i));
-			if (l != null)
-				break;
-		}
-		double[] gps = new double[2];
-
-		if (l != null) {
-			gps[0] = l.getLatitude();
-			gps[1] = l.getLongitude();
-		}
-		return gps;
 	}
 
 	@Override
@@ -116,17 +93,37 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
 	private void showFilterDialog() {
+
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		dialogView = inflater.inflate(R.layout.setttings_dialog, null, true);
-		price1 = (ToggleButton) dialogView.findViewById(R.id.price1);
-		price2 = (ToggleButton) dialogView.findViewById(R.id.price2);
-		
+		dialogView = inflater.inflate(R.layout.dialog_filter, null, true);
+		initDialogView();
 		dialogBuilder.setView(dialogView);
 		dialogBuilder.setTitle("Set the Filter");
-		dialogBuilder.setPositiveButton("Save", dialogOnClickListener);
-		dialogBuilder.setNegativeButton("Cancel", dialogOnClickListener);
+		dialogBuilder.setPositiveButton(R.string.save, dialogOnClickListener);
+		dialogBuilder.setNegativeButton(R.string.cancle, dialogOnClickListener);
 		dialogBuilder.create().show();
+	}
+
+	private void initDialogView() {
+
+		price1 = (ToggleButton) dialogView.findViewById(R.id.price1);
+		price2 = (ToggleButton) dialogView.findViewById(R.id.price2);
+		price3 = (ToggleButton) dialogView.findViewById(R.id.price3);
+		price4 = (ToggleButton) dialogView.findViewById(R.id.price4);
+		swtchShowVisited = (Switch) dialogView.findViewById(R.id.swtch_show_visited);
+		swtchOpenNow = (Switch) dialogView.findViewById(R.id.swtch_open_now);
+		populateDialotValues();
+	}
+
+	private void populateDialotValues() {
+		price1.setChecked(SharedPrefHelper.getPrice1Pref(MainActivity.this));
+		price2.setChecked(SharedPrefHelper.getPrice2Pref(MainActivity.this));
+		price3.setChecked(SharedPrefHelper.getPrice3Pref(MainActivity.this));
+		price4.setChecked(SharedPrefHelper.getPrice4Pref(MainActivity.this));
+		swtchShowVisited.setChecked(SharedPrefHelper.isShowVisitedPrefs(MainActivity.this));
+		swtchOpenNow.setChecked(SharedPrefHelper.getOpenNowPref(MainActivity.this));
+
 	}
 
 	OnClickListener dialogOnClickListener = new OnClickListener() {
@@ -137,18 +134,44 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			switch (which) {
 			// Save button
 			case -1:
-				Log.d(TAG, "Saved!");
-				Log.d(TAG, "Price1 :" + price1.isChecked());
-				Log.d(TAG, "Price2 :" + price2.isChecked());
+				Filters filters = new Filters();
+
+				filters.setPrice1(price1.isChecked());
+				filters.setPrice2(price2.isChecked());
+				filters.setPrice3(price3.isChecked());
+				filters.setPrice4(price4.isChecked());
+				filters.setOpenNow(swtchOpenNow.isChecked());
+				filters.setShowVisited(swtchShowVisited.isChecked());
+
+				SharedPrefHelper.AddFiltersSharedPrefs(filters, MainActivity.this);
+
 				break;
 			// Cancel Button
 			case -2:
-				Log.d(TAG, "Cancel!");
-				break;
+				// YelpClient yelp = new YelpClient();
+				// String response = yelp.search("burritos", 30.361471,
+				// -87.164326);
 
+				searchApi();
+				break;
 			default:
 				break;
 			}
+		}
+
+		private void searchApi() {
+			YelpClient client = YelpClientApplication.getYelpClient();
+			client.search("burritos", 30.361471, -87.164326, new JsonHttpResponseHandler() {
+				@Override
+				public void onSuccess(JSONObject body) {
+					Log.d(TAG, "Response: " + body.toString());
+				}
+
+				@Override
+				public void onFailure(Throwable t) {
+					Log.e(TAG, "Erros - " + t.getMessage());
+				}
+			});
 		}
 	};
 

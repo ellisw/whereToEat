@@ -4,5 +4,9 @@
     <string name="app_name">WhereToEat</string>
     <string name="action_filter">Filter</string>
     <string name="hello_world">Hello world!</string>
+    <string name="save">Save</string>
+    <string name="cancle">Cancle</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
