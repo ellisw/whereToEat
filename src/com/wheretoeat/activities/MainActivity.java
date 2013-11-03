@@ -1,7 +1,5 @@
 package com.wheretoeat.activities;
 
-import org.json.JSONObject;
-
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.ActionBar.Tab;
@@ -29,13 +27,10 @@ import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wheretoeat.adapters.SectionPagerAdapter;
 import com.wheretoeat.helper.GoogleMapHelper;
 import com.wheretoeat.helper.SharedPrefHelper;
 import com.wheretoeat.models.Filters;
-import com.wheretoeat.restclients.YelpClient;
-import com.wheretoeat.restclients.YelpClientApplication;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -59,15 +54,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		//create Pager Adapter.
 		sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
+		//get ViewPager.
 		viewPager = (ViewPager) findViewById(R.id.viewPagerCategory);
 		page = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-
+		//Set Listener for ViewPager 
 		viewPager.setOnPageChangeListener(pageChangeListener);
+		//Set Adapter on ViewPager
 		viewPager.setAdapter(sectionPagerAdapter);
 		viewPager.setCurrentItem(1);
-
+		
 		supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		googleMap = supportMapFragment.getMap();
 
@@ -148,30 +145,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				break;
 			// Cancel Button
 			case -2:
-				// YelpClient yelp = new YelpClient();
-				// String response = yelp.search("burritos", 30.361471,
-				// -87.164326);
 
-				searchApi();
 				break;
+
 			default:
 				break;
 			}
-		}
-
-		private void searchApi() {
-			YelpClient client = YelpClientApplication.getYelpClient();
-			client.search("burritos", 30.361471, -87.164326, new JsonHttpResponseHandler() {
-				@Override
-				public void onSuccess(JSONObject body) {
-					Log.d(TAG, "Response: " + body.toString());
-				}
-
-				@Override
-				public void onFailure(Throwable t) {
-					Log.e(TAG, "Erros - " + t.getMessage());
-				}
-			});
 		}
 	};
 
@@ -270,6 +249,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+
 	}
 
 }

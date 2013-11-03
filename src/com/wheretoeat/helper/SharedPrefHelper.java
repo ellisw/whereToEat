@@ -15,6 +15,8 @@ public class SharedPrefHelper {
 	private static final String PRICE4_KEY = "price4_key";
 	private static final String OPEN_NOW_KEY = "open_now_key";
 	private static final String SHOW_VISITED_KEY = "show_visited_key";
+	private static final String CURRENT_LATITUDE_KEY = "latitude";
+	private static final String CURRENT_LONGITUDE_KEY = "logitude";
 
 	public static void AddFiltersSharedPrefs(Filters filters, Context context) {
 		SharedPreferences prefs = context.getSharedPreferences(FILTERS_SHARED_PREF, 0);

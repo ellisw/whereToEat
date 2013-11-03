@@ -38,7 +38,8 @@ public class GoogleMapHelper {
 		// double[] d = GoogleMapHelper.getCurrentlocation(getBaseContext());
 		LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
 
-		googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+		googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location")
+				.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
 		googleMap.setMyLocationEnabled(true);
 		googleMap.getUiSettings().setZoomControlsEnabled(false);
