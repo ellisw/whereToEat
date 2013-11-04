@@ -36,12 +36,8 @@ public class YelpClient extends OAuthBaseClient {
 		client.setAccessToken(new Token(TOKEN, TOKEN_SECRET));
 	}
 
-	// public YelpClient() {
-	// this.service = new
-	// ServiceBuilder().provider(YelpApi2.class).apiKey(CONSUMER_KEY).apiSecret(CONSUMER_SECRET).build();
-	// this.accessToken = new Token(TOKEN, TOKEN_SECRET);
-	// }
-	public void search(String term, double latitude, double longitude, AsyncHttpResponseHandler handler) {
+	public void searchRestaurants(String term, String sort, double latitude, double longitude, AsyncHttpResponseHandler handler) {
+
 		/*
 		 * YelpAsyncTask asyncTask = new YelpAsyncTask();
 		 * asyncTask.execute(service,accessToken);
@@ -50,6 +46,7 @@ public class YelpClient extends OAuthBaseClient {
 		RequestParams param = new RequestParams();
 		param.put("term", term);
 		param.put("ll", latitude + "," + longitude);
+		param.put("sort", sort);
 		client.get(apiUrl, param, handler);
 	}
 

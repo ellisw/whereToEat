@@ -41,8 +41,8 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
 		ImageLoader.getInstance().displayImage(restaurants.get(position).getResUrl(), imgRestaurant);
 		tvName.setText(restaurants.get(position).getName());
 		tvInfo.setText(restaurants.get(position).getCategories());
-		tvMiles.setText(restaurants.get(position).getDistanceMiles());
-		tvRatings.setText(restaurants.get(position).getRating());
+		tvMiles.setText(restaurants.get(position).getDistanceMiles() + " mi");
+		tvRatings.setText(restaurants.get(position).getRating() + "/5");
 
 		return view;
 	}

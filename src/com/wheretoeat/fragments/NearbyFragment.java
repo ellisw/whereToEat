@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wheretoeat.activities.R;
 import com.wheretoeat.adapters.RestaurantsAdpater;
+import com.wheretoeat.helper.GoogleMapHelper;
 import com.wheretoeat.models.Restaurant;
 import com.wheretoeat.restclients.YelpClient;
 import com.wheretoeat.restclients.YelpClientApplication;
@@ -23,9 +24,19 @@ import com.wheretoeat.restclients.YelpClientApplication;
 public class NearbyFragment extends Fragment {
 
 	protected static final String TAG = "NearbyFragment";
+
 	List<Restaurant> resList;
 	ListView listView;
 	RestaurantsAdpater adapter;
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		listView = (ListView) getActivity().findViewById(R.id.lv_nearby_res);
+		resList = new ArrayList<Restaurant>();
+		adapter = new RestaurantsAdpater(getActivity(), resList);
+		listView.setAdapter(adapter);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,20 +44,15 @@ public class NearbyFragment extends Fragment {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		listView = (ListView) getActivity().findViewById(R.id.lv_res);
-		resList = new ArrayList<Restaurant>();
-		adapter = new RestaurantsAdpater(getActivity(), resList);
-		listView.setAdapter(adapter);
+	public void onStart() {
+		super.onStart();
 		searchApi();
-
 	}
 
 	private void searchApi() {
-
+		double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
 		YelpClient client = YelpClientApplication.getYelpClient();
-		client.search("restaurants", 37.5294083, -121.9814466, new JsonHttpResponseHandler() {
+		client.searchRestaurants("restaurants", "1", coords[0], coords[1], new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONObject res) {
@@ -62,5 +68,4 @@ public class NearbyFragment extends Fragment {
 			}
 		});
 	}
-
 }

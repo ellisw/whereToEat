@@ -185,8 +185,8 @@ containing a value of this type.
         public static final int ic_zoom_out=0x7f02001b;
     }
     public static final class id {
-        public static final int action_filter=0x7f05001e;
-        public static final int action_settings=0x7f05001d;
+        public static final int action_filter=0x7f05001f;
+        public static final int action_settings=0x7f05001e;
         public static final int hybrid=0x7f050004;
         public static final int imgBtnMap=0x7f050008;
         public static final int imgBtnPager=0x7f05000c;
@@ -195,7 +195,8 @@ containing a value of this type.
         public static final int lbl_open_now=0x7f050015;
         public static final int lbl_price=0x7f05000d;
         public static final int lbl_show_visited=0x7f050013;
-        public static final int lv_res=0x7f050017;
+        public static final int lv_nearby_res=0x7f050017;
+        public static final int lv_toprated_res=0x7f05001d;
         public static final int main_layout=0x7f050005;
         public static final int map=0x7f050007;
         public static final int map_fragment_container=0x7f050006;
@@ -211,8 +212,8 @@ containing a value of this type.
         public static final int swtch_open_now=0x7f050016;
         public static final int swtch_show_visited=0x7f050014;
         public static final int terrain=0x7f050003;
-        public static final int tv_body=0x7f05001a;
-        public static final int tv_miles=0x7f05001b;
+        public static final int tv_body=0x7f05001b;
+        public static final int tv_miles=0x7f05001a;
         public static final int tv_name=0x7f050019;
         public static final int tv_ratings=0x7f05001c;
         public static final int viewPagerCategory=0x7f05000a;
@@ -221,13 +222,12 @@ containing a value of this type.
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int dialog_filter=0x7f030002;
-        public static final int fragment_base_restaurants=0x7f030003;
-        public static final int fragment_categories=0x7f030004;
-        public static final int fragment_favorite=0x7f030005;
-        public static final int fragment_nearby=0x7f030006;
-        public static final int fragment_opennow=0x7f030007;
-        public static final int fragment_restaurant_item=0x7f030008;
-        public static final int fragment_toprated=0x7f030009;
+        public static final int fragment_categories=0x7f030003;
+        public static final int fragment_favorite=0x7f030004;
+        public static final int fragment_nearby=0x7f030005;
+        public static final int fragment_opennow=0x7f030006;
+        public static final int fragment_restaurant_item=0x7f030007;
+        public static final int fragment_toprated=0x7f030008;
     }
     public static final class menu {
         public static final int login=0x7f090000;

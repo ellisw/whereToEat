@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.wheretoeat.helper.Utility;
+
 public class Restaurant {
 
 	private List<Review> reviews;
@@ -39,8 +41,12 @@ public class Restaurant {
 					res.setResUrl(busiJsonObj.getString("image_url"));
 					res.setName(busiJsonObj.getString("name"));
 					res.setRating(busiJsonObj.getString("rating"));
+					// categoriesStringConversion(catArray)
 					res.setCategories(catArray.toString());
-					res.setDistanceMiles(busiJsonObj.getString("distance"));
+					double miles = Utility.convertMeterstoMiles(Double.parseDouble(busiJsonObj.getString("distance")));
+					miles = Math.round(miles * 100);
+					miles = miles / 100;
+					res.setDistanceMiles(miles + "");
 					resList.add(res);
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -49,6 +55,10 @@ public class Restaurant {
 		}
 
 		return resList;
+	}
+
+	private static String categoriesStringConversion(JSONArray catArray) {
+		return null;
 	}
 
 	public List<Review> getReviews() {

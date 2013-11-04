@@ -54,17 +54,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//create Pager Adapter.
+		// create Pager Adapter.
 		sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
-		//get ViewPager.
+		// get ViewPager.
 		viewPager = (ViewPager) findViewById(R.id.viewPagerCategory);
 		page = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-		//Set Listener for ViewPager 
+		// Set Listener for ViewPager
 		viewPager.setOnPageChangeListener(pageChangeListener);
-		//Set Adapter on ViewPager
+		// Set Adapter on ViewPager
 		viewPager.setAdapter(sectionPagerAdapter);
 		viewPager.setCurrentItem(1);
-		
+
 		supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		googleMap = supportMapFragment.getMap();
 
@@ -89,6 +89,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		return true;
 	}
 
+	// display dialog box
 	private void showFilterDialog() {
 
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -102,6 +103,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		dialogBuilder.create().show();
 	}
 
+	// Initialize the views of dialog
 	private void initDialogView() {
 
 		price1 = (ToggleButton) dialogView.findViewById(R.id.price1);
@@ -113,6 +115,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		populateDialotValues();
 	}
 
+	// Populate the values in dialogbox stored from SharedPrefs
 	private void populateDialotValues() {
 		price1.setChecked(SharedPrefHelper.getPrice1Pref(MainActivity.this));
 		price2.setChecked(SharedPrefHelper.getPrice2Pref(MainActivity.this));
@@ -123,8 +126,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	}
 
+	// Dialog button click listener
 	OnClickListener dialogOnClickListener = new OnClickListener() {
-
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 
@@ -145,9 +148,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				break;
 			// Cancel Button
 			case -2:
-
 				break;
-
 			default:
 				break;
 			}
