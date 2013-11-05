@@ -83,7 +83,7 @@ public class Restaurant {
 					res.setName(resultsObj.getString("name"));
 					res.setRating(resultsObj.getString("rating"));
 					String categories = categoriesStringConversion(catArray);
-					res.setCategories(catArray.toString());
+					res.setCategories(categories);
 					resList.add(res);
 				} catch (JSONException e) {
 					e.printStackTrace();
