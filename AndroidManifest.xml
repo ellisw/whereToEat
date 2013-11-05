@@ -49,10 +49,14 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.wheretoeat.activities.DetailsActivity"
+            android:label="@string/title_details" >
+        </activity>
         <!-- this is key for mapApi -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBKTRvcl8SYofQIVaU0Ka_Ck_fahfhr2do" />
+            android:value="AIzaSyBUNfgVhk7Y9SKqikuknk54BfjTdMmnVgw" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
@@ -41,6 +42,7 @@ import com.wheretoeat.models.Restaurant;
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, OnMapUpdateListener {
 
 	private static final String TAG = "MainFragmentActivity";
+	private static int DETAILS_REQUEST_CODE = 1;
 	final static int ZOOM_LEVEL = 17;
 	SectionPagerAdapter sectionPagerAdapter;
 	ViewPager viewPager;
@@ -273,6 +275,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 
 		}
+	}
+
+	@Override
+	public void onDetailSelected(String ref) {
+		Intent i = new Intent(this, DetailsActivity.class);
+		i.putExtra("ref", ref);
+		startActivityForResult(i, DETAILS_REQUEST_CODE);	
 	}
 
 }

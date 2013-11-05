@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -34,6 +36,7 @@ public class NearbyFragment extends Fragment {
 
 	public interface OnMapUpdateListener {
 		public void onMapUpdate(List<Restaurant> resList);
+		public void onDetailSelected(String ref);
 	}
 
 	@Override
@@ -51,6 +54,15 @@ public class NearbyFragment extends Fragment {
 		resList = new ArrayList<Restaurant>();
 		adapter = new RestaurantsAdpater(getActivity(), resList);
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
+					long arg3) {
+				Log.d("TESTING", view.getTag().toString());
+				callBackHandler.onDetailSelected(view.getTag().toString());
+//				fetchDetails(view.getTag().toString());
+			}
+		});
 	}
 
 	@Override

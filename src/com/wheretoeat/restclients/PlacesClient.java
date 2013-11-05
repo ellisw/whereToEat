@@ -35,7 +35,13 @@ public class PlacesClient {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.get(url, handler);
 	}
-
+	
+	public void getDetails(String ref, AsyncHttpResponseHandler handler){
+		String url = "https://maps.googleapis.com/maps/api/place/details/json?reference=" + ref + "&sensor=true&key=" + BROWSER_API_KEY;
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.get(url, handler);
+	}
+	
 	// https://maps.googleapis.com/maps/api/place/search/json?location=28.632808,77.218276&radius=500&types=atm&sensor=false&key=apikey
 	private String makeUrl(String type, String rankby, double latitude, double longitude, String baseurl) {
 		StringBuilder urlString = new StringBuilder(baseurl);

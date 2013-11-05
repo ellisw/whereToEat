@@ -72,21 +72,8 @@ public class Restaurant {
 
 		if (array != null && array.length() > 0) {
 			for (int i = 0; i < array.length(); i++) {
-				Restaurant res = new Restaurant();
-				JSONObject geometryObj;
-				JSONObject resultsObj;
 				try {
-					resultsObj = array.getJSONObject(i);
-					geometryObj = resultsObj.getJSONObject("geometry");
-					res.setLocation(getLocation(geometryObj));
-					JSONArray catArray = resultsObj.getJSONArray("types");
-					res.setResUrl(resultsObj.getString("icon"));
-					res.setName(resultsObj.getString("name"));
-					res.setRating(resultsObj.getString("rating"));
-					res.setResId(resultsObj.getString("reference"));
-					String categories = categoriesStringConversion(catArray);
-					res.setCategories(categories);
-					resList.add(res);
+					resList.add(fromJson(array.getJSONObject(i)));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -94,6 +81,37 @@ public class Restaurant {
 		}
 
 		return resList;
+	}
+	
+	public static Restaurant fromJson(JSONObject resultsObj) throws JSONException{
+		boolean isDetail = false;
+		if(resultsObj.has("result")){
+			resultsObj = resultsObj.getJSONObject("result");
+			isDetail = true;
+		}
+		Restaurant res = new Restaurant();
+
+		try{
+			JSONObject geometryObj = resultsObj.getJSONObject("geometry");
+			res.setLocation(getLocation(geometryObj));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		JSONArray catArray = resultsObj.getJSONArray("types");
+		res.setResUrl(resultsObj.optString("icon"));
+		res.setName(resultsObj.getString("name"));
+		res.setRating(resultsObj.getString("rating"));
+		res.setResId(resultsObj.getString("reference"));
+		if(isDetail){
+			res.setPhoneNumber(resultsObj.getString("formatted_phone_number"));
+			res.setAddress(resultsObj.getString("formatted_address"));
+			res.setReviews(Review.fromJSON(resultsObj.getJSONArray("reviews")));
+		}
+
+		String categories = categoriesStringConversion(catArray);
+		res.setCategories(categories);
+		return res;
 	}
 
 	private static double[] getLocation(JSONObject geometryJsonObj) {
@@ -112,9 +130,12 @@ public class Restaurant {
 		StringBuilder categories = new StringBuilder();
 		for (int i = 0; i < catArray.length(); i++) {
 			try {
-				categories.append(catArray.get(i).toString());
+				String type = catArray.get(i).toString();
+				String prettyType = type.substring(0, 1).toUpperCase() + type.substring(1);
+				prettyType = prettyType.replace('_', ' ');
+				categories.append(prettyType);
 				if (i < catArray.length() - 1) {
-					categories.append(",");
+					categories.append(", ");
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
