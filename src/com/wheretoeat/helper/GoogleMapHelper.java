@@ -5,7 +5,10 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -48,19 +51,24 @@ public class GoogleMapHelper {
 		}
 
 		googleMap.addMarker(new MarkerOptions().position(currentLocation).title(title).icon(descriptor));
-		// Bitmap bmp = createBitmap("1");
+		// googleMap.addMarker(new
+		// MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromAsset(getUrl("1"))));
 		// googleMap.addMarker(new
 		// MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromBitmap(bmp)));
 	}
 
-	/*
-	 * public static Bitmap createBitmap(String text) { Bitmap.Config conf =
-	 * Bitmap.Config.ARGB_8888; Bitmap bmp = Bitmap.createBitmap(200, 50, conf);
-	 * Canvas canvas = new Canvas(bmp); Paint paint = new Paint();
-	 * paint.setStyle(Style.FILL); paint.setColor(Color.WHITE);
-	 * paint.setTypeface(tf); paint.setTextAlign(Align.CENTER);
-	 * paint.setTextSize(convertToPixels(context, 11));
-	 * 
-	 * canvas.drawText(text, 0, 50, paint); return bmp; }
-	 */
+	public static String getUrl(String text) {
+		return "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + text + "|FF0000|000000";
+	}
+
+	public static Bitmap createBitmap(String text) {
+		Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+		Bitmap bmp = Bitmap.createBitmap(200, 50, conf);
+		Canvas canvas = new Canvas(bmp);
+		Paint paint = new Paint();
+
+		canvas.drawText(text, 0, 50, paint);
+		return bmp;
+	}
+
 }

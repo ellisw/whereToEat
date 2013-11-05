@@ -11,6 +11,7 @@ import com.wheretoeat.helper.Utility;
 
 public class Restaurant {
 
+	private String resId;
 	private List<Review> reviews;
 	private String address;
 	private String phoneNumber;
@@ -82,6 +83,7 @@ public class Restaurant {
 					res.setResUrl(resultsObj.getString("icon"));
 					res.setName(resultsObj.getString("name"));
 					res.setRating(resultsObj.getString("rating"));
+					res.setResId(resultsObj.getString("reference"));
 					String categories = categoriesStringConversion(catArray);
 					res.setCategories(categories);
 					resList.add(res);
@@ -207,6 +209,14 @@ public class Restaurant {
 
 	public void setLocation(double[] location) {
 		this.location = location;
+	}
+
+	public String getResId() {
+		return resId;
+	}
+
+	public void setResId(String resId) {
+		this.resId = resId;
 	}
 
 }

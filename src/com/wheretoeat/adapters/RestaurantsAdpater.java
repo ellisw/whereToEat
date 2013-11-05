@@ -3,6 +3,7 @@ package com.wheretoeat.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.wheretoeat.activities.R;
 import com.wheretoeat.models.Restaurant;
 
 public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
+	private static final String TAG = "RestaurantsAdpater";
 	private Context context;
 	List<Restaurant> restaurants;
 	ImageView imgRestaurant;
@@ -42,7 +44,8 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
 		tvName.setText(restaurants.get(position).getName());
 		tvInfo.setText(restaurants.get(position).getCategories());
 		tvRatings.setText(restaurants.get(position).getRating() + "/5");
-
+		Log.d(TAG, restaurants.get(position).getResId());
+		view.setTag(restaurants.get(position).getResId());
 		return view;
 	}
 
