@@ -1,5 +1,7 @@
 package com.wheretoeat.activities;
 
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.ActionBar.Tab;
@@ -25,16 +27,21 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.wheretoeat.adapters.SectionPagerAdapter;
+import com.wheretoeat.fragments.NearbyFragment.OnMapUpdateListener;
 import com.wheretoeat.helper.GoogleMapHelper;
 import com.wheretoeat.helper.SharedPrefHelper;
 import com.wheretoeat.models.Filters;
+import com.wheretoeat.models.Restaurant;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener, OnMapUpdateListener {
 
-	private static final String TAG = "MainActivity";
+	private static final String TAG = "MainFragmentActivity";
+	final static int ZOOM_LEVEL = 17;
 	SectionPagerAdapter sectionPagerAdapter;
 	ViewPager viewPager;
 	ActionBar actionBar;
@@ -68,9 +75,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		googleMap = supportMapFragment.getMap();
 
-		double[] coords = GoogleMapHelper.getCurrentlocation(getBaseContext());
+		double[] coordinates = GoogleMapHelper.getCurrentlocation(getBaseContext());
 
-		GoogleMapHelper.markLocationOnMap(coords, googleMap);
+		LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
+		GoogleMapHelper.markLocationOnMap(coordinates, googleMap, "CurrentLocation");
+		googleMap.setMyLocationEnabled(true);
+		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL));
+		googleMap.getUiSettings().setZoomControlsEnabled(false);
 
 	}
 
@@ -219,7 +230,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
 	OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-
 		@Override
 		public void onPageSelected(int position) {
 			try {
@@ -236,6 +246,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
+
 	};
 
 	@Override
@@ -245,12 +256,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		viewPager.setCurrentItem(tab.getPosition());
-
+		Log.d(TAG, "onTabSelected : " + tab.getPosition());
 	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
+	}
+
+	@Override
+	public void onMapUpdate(List<Restaurant> resList) {
+		if (resList != null && resList.size() > 0) {
+			for (Restaurant restaurant : resList) {
+				double[] coordinates = restaurant.getLocation();
+				GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName());
+			}
+
+		}
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,10 +17,12 @@ import android.widget.ListView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wheretoeat.activities.R;
 import com.wheretoeat.adapters.RestaurantsAdpater;
+import com.wheretoeat.fragments.NearbyFragment.OnMapUpdateListener;
 import com.wheretoeat.helper.GoogleMapHelper;
 import com.wheretoeat.models.Restaurant;
+import com.wheretoeat.restclients.PlacesClient;
+import com.wheretoeat.restclients.RestClientApplication;
 import com.wheretoeat.restclients.YelpClient;
-import com.wheretoeat.restclients.YelpClientApplication;
 
 public class TopRatedFragment extends Fragment {
 
@@ -27,6 +30,16 @@ public class TopRatedFragment extends Fragment {
 	List<Restaurant> resList;
 	ListView listView;
 	RestaurantsAdpater adapter;
+	OnMapUpdateListener callBackHandler;
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof OnMapUpdateListener) {
+			callBackHandler = (OnMapUpdateListener) activity;
+		}
+	}
+	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -41,7 +54,8 @@ public class TopRatedFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		searchApi();
+		// searchYelpApi();
+		searchPlacesApi();
 	}
 
 	@Override
@@ -49,9 +63,9 @@ public class TopRatedFragment extends Fragment {
 		return inflater.inflate(R.layout.fragment_toprated, container, false);
 	}
 
-	private void searchApi() {
+	private void searchYelpApi() {
 		double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
-		YelpClient client = YelpClientApplication.getYelpClient();
+		YelpClient client = RestClientApplication.getYelpClient();
 		client.searchRestaurants("restaurants", "2", coords[0], coords[1], new JsonHttpResponseHandler() {
 
 			@Override
@@ -65,6 +79,25 @@ public class TopRatedFragment extends Fragment {
 			@Override
 			public void onFailure(Throwable t) {
 				Log.e(TAG, "Erros - " + t.getMessage());
+			}
+		});
+	}
+
+	private void searchPlacesApi() {
+		double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
+		PlacesClient client = RestClientApplication.getPlacesClient();
+		client.searchRestaurants("restaurant", null, coords[0], coords[1], new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				Log.d(TAG, "Places response = " + response);
+				resList = Restaurant.fromPlacesJSON(response);
+				adapter.addAll(resList);
+				callBackHandler.onMapUpdate(resList);
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				Log.d(TAG, "Places Failure = " + t.getMessage());
 			}
 		});
 	}

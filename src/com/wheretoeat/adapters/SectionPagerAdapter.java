@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.wheretoeat.fragments.CategoriesFragment;
 import com.wheretoeat.fragments.FavoritesFragment;
 import com.wheretoeat.fragments.NearbyFragment;
-import com.wheretoeat.fragments.OpenNowFragment;
 import com.wheretoeat.fragments.TopRatedFragment;
 
 public class SectionPagerAdapter extends FragmentPagerAdapter {
@@ -24,11 +23,9 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
 		case 1:
 			return "Nearby";
 		case 2:
-			return "Favorites";
-		case 3:
 			return "Top Rated";
-		case 4:
-			return "Open Now";
+		case 3:
+			return "Favorites";
 		default:
 			break;
 		}
@@ -46,13 +43,10 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
 			fragment = new NearbyFragment();
 			break;
 		case 2:
-			fragment = new FavoritesFragment();
-			break;
-		case 3:
 			fragment = new TopRatedFragment();
 			break;
-		case 4:
-			fragment = new OpenNowFragment();
+		case 3:
+			fragment = new FavoritesFragment();
 			break;
 		default:
 			return null;
@@ -62,7 +56,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 5;
+		return 4;
 	}
 
 }

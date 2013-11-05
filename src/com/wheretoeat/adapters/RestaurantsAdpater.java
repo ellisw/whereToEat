@@ -20,7 +20,7 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
 	ImageView imgRestaurant;
 	TextView tvName;
 	TextView tvInfo;
-	TextView tvMiles;
+	// TextView tvMiles;
 	TextView tvRatings;
 
 	public RestaurantsAdpater(Context context, List<Restaurant> restaurants) {
@@ -41,7 +41,6 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
 		ImageLoader.getInstance().displayImage(restaurants.get(position).getResUrl(), imgRestaurant);
 		tvName.setText(restaurants.get(position).getName());
 		tvInfo.setText(restaurants.get(position).getCategories());
-		tvMiles.setText(restaurants.get(position).getDistanceMiles() + " mi");
 		tvRatings.setText(restaurants.get(position).getRating() + "/5");
 
 		return view;
@@ -50,7 +49,7 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
 	private void initViews(View view) {
 		imgRestaurant = (ImageView) view.findViewById(R.id.img_res);
 		tvName = (TextView) view.findViewById(R.id.tv_name);
-		tvMiles = (TextView) view.findViewById(R.id.tv_miles);
+		// tvMiles = (TextView) view.findViewById(R.id.tv_miles);
 		tvInfo = (TextView) view.findViewById(R.id.tv_body);
 		tvRatings = (TextView) view.findViewById(R.id.tv_ratings);
 	}

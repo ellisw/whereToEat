@@ -21,6 +21,9 @@ public class Restaurant {
 	private String name;
 	private String categories;
 	private String distanceMiles;
+	// double[0] = lat
+	// double[1] = lng
+	private double[] location;
 
 	public static List<Restaurant> fromJSON(JSONObject jsonObject) {
 		List<Restaurant> resList = new ArrayList<Restaurant>();
@@ -57,8 +60,65 @@ public class Restaurant {
 		return resList;
 	}
 
+	public static List<Restaurant> fromPlacesJSON(JSONObject jsonObject) {
+		List<Restaurant> resList = new ArrayList<Restaurant>();
+		JSONArray array = null;
+		try {
+			array = jsonObject.getJSONArray("results");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		if (array != null && array.length() > 0) {
+			for (int i = 0; i < array.length(); i++) {
+				Restaurant res = new Restaurant();
+				JSONObject geometryObj;
+				JSONObject resultsObj;
+				try {
+					resultsObj = array.getJSONObject(i);
+					geometryObj = resultsObj.getJSONObject("geometry");
+					res.setLocation(getLocation(geometryObj));
+					JSONArray catArray = resultsObj.getJSONArray("types");
+					res.setResUrl(resultsObj.getString("icon"));
+					res.setName(resultsObj.getString("name"));
+					res.setRating(resultsObj.getString("rating"));
+					String categories = categoriesStringConversion(catArray);
+					res.setCategories(categories);
+					resList.add(res);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return resList;
+	}
+
+	private static double[] getLocation(JSONObject geometryJsonObj) {
+		double[] location = { 0, 0 };
+		try {
+			JSONObject locationObj = geometryJsonObj.getJSONObject("location");
+			location[0] = locationObj.getDouble("lat");
+			location[1] = locationObj.getDouble("lng");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return location;
+	}
+
 	private static String categoriesStringConversion(JSONArray catArray) {
-		return null;
+		StringBuilder categories = new StringBuilder();
+		for (int i = 0; i < catArray.length(); i++) {
+			try {
+				categories.append(catArray.get(i).toString());
+				if (i < catArray.length() - 1) {
+					categories.append(",");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return categories.toString();
 	}
 
 	public List<Review> getReviews() {
@@ -139,6 +199,14 @@ public class Restaurant {
 
 	public void setCategories(String categories) {
 		this.categories = categories;
+	}
+
+	public double[] getLocation() {
+		return location;
+	}
+
+	public void setLocation(double[] location) {
+		this.location = location;
 	}
 
 }
