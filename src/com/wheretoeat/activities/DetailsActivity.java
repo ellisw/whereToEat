@@ -124,9 +124,9 @@ public class DetailsActivity extends Activity {
 		 intent.setAction(Intent.ACTION_VIEW);
 		 String data = String.format("geo:%s,%s", 37.7764, -122.417);
 		 int zoomLevel=15;
-		 //if (zoomLevel != null) {
-		     data = String.format("%s?z=%s", data, zoomLevel);
-		 //}
+		 
+		 data = String.format("%s?z=%s", data, zoomLevel);
+		 
 		 intent.setData(Uri.parse(data));
 		 startActivity(intent);
 	}
