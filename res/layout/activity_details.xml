@@ -153,6 +153,8 @@
                                 android:layout_marginLeft="10dp"
                                 android:text="650 692 3100"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:onClick="callNumber"
+                                android:clickable="true"
                                 android:textColor="@android:color/holo_blue_dark" />
                         </LinearLayout>
                     </TableRow>

@@ -7,9 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ public class DetailsActivity extends Activity {
 	private final String TAG = "DETAILS";
 	private List<Review> reviews;
 	private ReviewsAdapter adapter;
+	String phoneNumber;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,6 +62,7 @@ public class DetailsActivity extends Activity {
 		tvRestaurantName.setText(rest.getName());
 		tvCategories.setText(rest.getCategories());
 		tvPhoneNumber.setText(rest.getPhoneNumber());
+		phoneNumber=rest.getPhoneNumber();
 		tvAddress.setText(rest.getAddress());
 		
 
@@ -91,6 +96,13 @@ public class DetailsActivity extends Activity {
 				Log.d(TAG, "Places Failure = " + t.getMessage());
 			}
 		});
+	}
+	
+	// phone call intent
+	public void callNumber(View v){
+		Intent callIntent = new Intent(Intent.ACTION_DIAL);
+		callIntent.setData(Uri.parse("tel:"+phoneNumber));
+		startActivity(callIntent);
 	}
 	
 
