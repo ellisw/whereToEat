@@ -53,7 +53,7 @@ public class DetailsActivity extends Activity {
 		if (rest == null) {
 			return;
 		}
-		// TextView tvReviewCount = (TextView) findViewById(R.id.tvReviewCount);
+		TextView tvReviewCount = (TextView) findViewById(R.id.tvReviewCount);
 		TextView tvCategories = (TextView) findViewById(R.id.tvCategories);
 		TextView tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
 		TextView tvDirectionsLabel = (TextView) findViewById(R.id.tvDirectionsLabel);
@@ -77,6 +77,7 @@ public class DetailsActivity extends Activity {
 		website = rest.getResUrl();
 		reviewRatingBar.setRating(Float.parseFloat(rest.getRating()));
 		tvDetailviewRatings.setText(rest.getRating());
+		tvReviewCount.setText(rest.getReviews().size() + " Reviews");
 
 	}
 
