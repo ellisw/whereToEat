@@ -3,12 +3,14 @@ package com.wheretoeat.helper;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -39,36 +41,71 @@ public class GoogleMapHelper {
 		return gps;
 	}
 
-	public static void markLocationOnMap(double[] coordinates, GoogleMap googleMap, String title) {
+	public static void markLocationOnMap(double[] coordinates, GoogleMap googleMap, String title, Context context, int counter) {
 
 		// double[] d = GoogleMapHelper.getCurrentlocation(getBaseContext());
 		LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
-		BitmapDescriptor descriptor = null;
-		if (title.equalsIgnoreCase("CurrentLocation")) {
-			descriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
-		} else {
-			descriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
-		}
+		// BitmapDescriptor descriptor = null;
+		// if (title.equalsIgnoreCase("CurrentLocation")) {
+		// descriptor =
+		// BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
+		// } else {
+		// descriptor =
+		// BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+		// }
 
-		googleMap.addMarker(new MarkerOptions().position(currentLocation).title(title).icon(descriptor));
+		// googleMap.addMarker(new
+		// MarkerOptions().position(currentLocation).title(title).icon(descriptor));
+
 		// googleMap.addMarker(new
 		// MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromAsset(getUrl("1"))));
-		// googleMap.addMarker(new
-		// MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromBitmap(bmp)));
+		Bitmap bmp = null;
+		if (counter > 0) {
+			bmp = drawTextToBitmap(context, counter + "");
+		} else {
+			bmp = drawTextToBitmap(context, "");
+		}
+
+		googleMap.addMarker(new MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromBitmap(bmp)));
 	}
 
-	public static String getUrl(String text) {
-		return "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + text + "|FF0000|000000";
+	public static Bitmap drawTextToBitmap(Context mContext, String mText) {
+		try {
+			Resources resources = mContext.getResources();
+			float scale = resources.getDisplayMetrics().density;
+			Bitmap bitmap = BitmapFactory.decodeResource(resources, com.wheretoeat.activities.R.drawable.ic_map_marker);
+
+			android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
+			// set default bitmap config if none
+			if (bitmapConfig == null) {
+				bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+			}
+			// resource bitmaps are imutable,
+			// so we need to convert it to mutable one
+			bitmap = bitmap.copy(bitmapConfig, true);
+
+			Canvas canvas = new Canvas(bitmap);
+			// new antialised Paint
+			Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			// text color - #3D3D3D
+			paint.setColor(Color.rgb(0, 0, 0));
+			// setTypeface(null, Typeface.BOLD);
+			paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+			// text size in pixels
+			paint.setTextSize((int) (30));
+
+			// draw text to the Canvas center
+			Rect bounds = new Rect();
+			paint.getTextBounds(mText, 0, mText.length(), bounds);
+			int x = (bitmap.getWidth() - bounds.width()) / 2;
+			int y = (bitmap.getHeight() + bounds.height()) / 2;
+			canvas.drawText(mText, x - 5, y - 20, paint);
+
+			return bitmap;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+
 	}
-
-	public static Bitmap createBitmap(String text) {
-		Bitmap.Config conf = Bitmap.Config.ARGB_8888;
-		Bitmap bmp = Bitmap.createBitmap(200, 50, conf);
-		Canvas canvas = new Canvas(bmp);
-		Paint paint = new Paint();
-
-		canvas.drawText(text, 0, 50, paint);
-		return bmp;
-	}
-
 }

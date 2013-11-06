@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		double[] coordinates = GoogleMapHelper.getCurrentlocation(getBaseContext());
 
 		LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
-		GoogleMapHelper.markLocationOnMap(coordinates, googleMap, "CurrentLocation");
+		GoogleMapHelper.markLocationOnMap(coordinates, googleMap, "This is You", this, 0);
 		googleMap.setMyLocationEnabled(true);
 		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL));
 		googleMap.getUiSettings().setZoomControlsEnabled(false);
@@ -269,9 +269,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	public void onMapUpdate(List<Restaurant> resList) {
 		if (resList != null && resList.size() > 0) {
+			int counter = 1;
 			for (Restaurant restaurant : resList) {
 				double[] coordinates = restaurant.getLocation();
-				GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName());
+				GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName(), this, counter);
+				counter++;
 			}
 
 		}
@@ -281,7 +283,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onDetailSelected(String ref) {
 		Intent i = new Intent(this, DetailsActivity.class);
 		i.putExtra("ref", ref);
-		startActivityForResult(i, DETAILS_REQUEST_CODE);	
+		startActivityForResult(i, DETAILS_REQUEST_CODE);
 	}
 
 }

@@ -113,6 +113,8 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:text="Get Directions"
+                            android:onClick="getMap"
+                            android:clickable="true"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@android:color/holo_blue_dark"
                             android:textStyle="bold" />
@@ -153,6 +155,8 @@
                                 android:layout_marginLeft="10dp"
                                 android:text="650 692 3100"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:onClick="callNumber"
+                                android:clickable="true"
                                 android:textColor="@android:color/holo_blue_dark" />
                         </LinearLayout>
                     </TableRow>
@@ -177,6 +181,8 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:text="See Website"
+                            android:onClick="openSite"
+                            android:clickable="true"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@android:color/holo_blue_dark"
                             android:textStyle="bold" />

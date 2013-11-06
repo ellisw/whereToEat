@@ -3,24 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageView
+    <!--
+         <ImageView
         android:id="@+id/img_res"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"
         android:layout_margin="5dp"
         android:src="@drawable/ic_launcher" />
+    -->
+
+    <TextView
+        android:id="@+id/tv_numbers"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="#DF3A01"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/img_res"
+        android:layout_alignTop="@id/tv_numbers"
         android:layout_margin="5dp"
         android:layout_toLeftOf="@+id/tv_miles"
-        android:layout_toRightOf="@id/img_res"
+        android:layout_toRightOf="@id/tv_numbers"
         android:text="Restaurant Name"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -30,7 +44,7 @@
         android:layout_below="@id/tv_name"
         android:layout_margin="2dp"
         android:layout_toLeftOf="@+id/tv_ratings"
-        android:layout_toRightOf="@id/img_res"
+        android:layout_toRightOf="@id/tv_numbers"
         android:text="Res Information" />
 
     <TextView

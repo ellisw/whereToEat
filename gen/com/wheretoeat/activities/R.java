@@ -181,53 +181,66 @@ containing a value of this type.
         public static final int common_signin_btn_text_pressed_light=0x7f020017;
         public static final int ic_action_filter=0x7f020018;
         public static final int ic_launcher=0x7f020019;
-        public static final int ic_zoom_in=0x7f02001a;
-        public static final int ic_zoom_out=0x7f02001b;
+        public static final int ic_map_marker=0x7f02001a;
+        public static final int ic_zoom_in=0x7f02001b;
+        public static final int ic_zoom_out=0x7f02001c;
     }
     public static final class id {
-        public static final int action_filter=0x7f05002a;
-        public static final int action_settings=0x7f050029;
+        public static final int ImageView01=0x7f050015;
+        public static final int action_filter=0x7f050036;
+        public static final int action_settings=0x7f050035;
         public static final int hybrid=0x7f050004;
-        public static final int imgBtnMap=0x7f050013;
-        public static final int imgBtnPager=0x7f050017;
-        public static final int img_res=0x7f050023;
-        public static final int ivCall=0x7f05000d;
-        public static final int ivDirections=0x7f05000a;
-        public static final int ivRating=0x7f050006;
-        public static final int layout_price_btns=0x7f050019;
-        public static final int lbl_open_now=0x7f050020;
-        public static final int lbl_price=0x7f050018;
-        public static final int lbl_show_visited=0x7f05001e;
-        public static final int lv_nearby_res=0x7f050022;
-        public static final int lv_toprated_res=0x7f050028;
-        public static final int main_layout=0x7f050010;
-        public static final int map=0x7f050012;
-        public static final int map_fragment_container=0x7f050011;
+        public static final int imgBtnMap=0x7f05001b;
+        public static final int imgBtnPager=0x7f05001f;
+        public static final int ivCall=0x7f050011;
+        public static final int ivDirections=0x7f05000e;
+        public static final int ivRating=0x7f05000a;
+        public static final int layout_price_btns=0x7f050021;
+        public static final int lbl_open_now=0x7f050028;
+        public static final int lbl_price=0x7f050020;
+        public static final int lbl_show_visited=0x7f050026;
+        public static final int lvReviewsList=0x7f050017;
+        public static final int lv_nearby_res=0x7f05002a;
+        public static final int lv_toprated_res=0x7f050030;
+        public static final int main_layout=0x7f050018;
+        public static final int map=0x7f05001a;
+        public static final int map_fragment_container=0x7f050019;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int pager_container=0x7f050014;
-        public static final int pager_title_strip=0x7f050016;
-        public static final int price1=0x7f05001a;
-        public static final int price2=0x7f05001b;
-        public static final int price3=0x7f05001c;
-        public static final int price4=0x7f05001d;
+        public static final int pager_container=0x7f05001c;
+        public static final int pager_title_strip=0x7f05001e;
+        public static final int price1=0x7f050022;
+        public static final int price2=0x7f050023;
+        public static final int price3=0x7f050024;
+        public static final int price4=0x7f050025;
+        public static final int rlRatingSummary=0x7f050008;
         public static final int satellite=0x7f050002;
-        public static final int swtch_open_now=0x7f050021;
-        public static final int swtch_show_visited=0x7f05001f;
+        public static final int swtch_open_now=0x7f050029;
+        public static final int swtch_show_visited=0x7f050027;
+        public static final int tableLayout1=0x7f05000c;
         public static final int terrain=0x7f050003;
-        public static final int trCall=0x7f05000c;
-        public static final int trDirections=0x7f050009;
-        public static final int tvCallLabel=0x7f05000e;
-        public static final int tvCategories=0x7f050007;
-        public static final int tvDirectionsLabel=0x7f05000b;
-        public static final int tvPhoneNumber=0x7f05000f;
-        public static final int tvRestaurantName=0x7f050008;
-        public static final int tvReviewCount=0x7f050005;
-        public static final int tv_body=0x7f050026;
-        public static final int tv_miles=0x7f050025;
-        public static final int tv_name=0x7f050024;
-        public static final int tv_ratings=0x7f050027;
-        public static final int viewPagerCategory=0x7f050015;
+        public static final int textView1=0x7f050009;
+        public static final int trCall=0x7f050010;
+        public static final int trDirections=0x7f05000d;
+        public static final int trMenu=0x7f050014;
+        public static final int tvAddress=0x7f050007;
+        public static final int tvCallLabel=0x7f050012;
+        public static final int tvCategories=0x7f050005;
+        public static final int tvDate=0x7f050032;
+        public static final int tvDirectionsLabel=0x7f05000f;
+        public static final int tvName=0x7f050033;
+        public static final int tvPhoneNumber=0x7f050013;
+        public static final int tvRating=0x7f050034;
+        public static final int tvRestaurantName=0x7f050006;
+        public static final int tvReviewCount=0x7f05000b;
+        public static final int tvSeeMenu=0x7f050016;
+        public static final int tvText=0x7f050031;
+        public static final int tv_body=0x7f05002e;
+        public static final int tv_miles=0x7f05002d;
+        public static final int tv_name=0x7f05002c;
+        public static final int tv_numbers=0x7f05002b;
+        public static final int tv_ratings=0x7f05002f;
+        public static final int viewPagerCategory=0x7f05001d;
     }
     public static final class layout {
         public static final int activity_details=0x7f030000;
@@ -240,6 +253,7 @@ containing a value of this type.
         public static final int fragment_opennow=0x7f030007;
         public static final int fragment_restaurant_item=0x7f030008;
         public static final int fragment_toprated=0x7f030009;
+        public static final int review_item=0x7f03000a;
     }
     public static final class menu {
         public static final int details=0x7f090000;
@@ -248,7 +262,7 @@ containing a value of this type.
     }
     public static final class string {
         public static final int action_filter=0x7f060016;
-        public static final int action_settings=0x7f06001b;
+        public static final int action_settings=0x7f06001c;
         public static final int app_name=0x7f060015;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -332,6 +346,7 @@ containing a value of this type.
         public static final int hello_world=0x7f060017;
         public static final int save=0x7f060018;
         public static final int title_activity_login=0x7f06001a;
+        public static final int title_details=0x7f06001b;
     }
     public static final class style {
         /** 
