@@ -219,7 +219,6 @@ containing a value of this type.
         public static final int swtch_show_visited=0x7f050027;
         public static final int tableLayout1=0x7f05000c;
         public static final int terrain=0x7f050003;
-        public static final int textView1=0x7f050009;
         public static final int trCall=0x7f050010;
         public static final int trDirections=0x7f05000d;
         public static final int trMenu=0x7f050014;
@@ -227,6 +226,7 @@ containing a value of this type.
         public static final int tvCallLabel=0x7f050012;
         public static final int tvCategories=0x7f050005;
         public static final int tvDate=0x7f050032;
+        public static final int tvDetailviewRatings=0x7f050009;
         public static final int tvDirectionsLabel=0x7f05000f;
         public static final int tvName=0x7f050033;
         public static final int tvPhoneNumber=0x7f050013;
