@@ -36,6 +36,14 @@ public class DetailsActivity extends Activity {
 	String direction;
 	private RatingBar reviewRatingBar;
 	private TextView tvDetailviewRatings;
+	TextView tvReviewCount;
+	TextView tvCategories;
+	TextView tvRestaurantName;
+	TextView tvDirectionsLabel;
+	TextView tvCallLabel;
+	TextView tvPhoneNumber;
+	TextView tvAddress;
+	ImageView ivCall;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +61,14 @@ public class DetailsActivity extends Activity {
 		if (rest == null) {
 			return;
 		}
-		TextView tvReviewCount = (TextView) findViewById(R.id.tvReviewCount);
-		TextView tvCategories = (TextView) findViewById(R.id.tvCategories);
-		TextView tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
-		TextView tvDirectionsLabel = (TextView) findViewById(R.id.tvDirectionsLabel);
-		TextView tvCallLabel = (TextView) findViewById(R.id.tvCallLabel);
-		TextView tvPhoneNumber = (TextView) findViewById(R.id.tvPhoneNumber);
-		TextView tvAddress = (TextView) findViewById(R.id.tvAddress);
-		ImageView ivCall = (ImageView) findViewById(R.id.ivCall);
+		tvReviewCount = (TextView) findViewById(R.id.tvReviewCount);
+		tvCategories = (TextView) findViewById(R.id.tvCategories);
+		tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
+		tvDirectionsLabel = (TextView) findViewById(R.id.tvDirectionsLabel);
+		tvCallLabel = (TextView) findViewById(R.id.tvCallLabel);
+		tvPhoneNumber = (TextView) findViewById(R.id.tvPhoneNumber);
+		tvAddress = (TextView) findViewById(R.id.tvAddress);
+		ivCall = (ImageView) findViewById(R.id.ivCall);
 		reviewRatingBar = (RatingBar) findViewById(R.id.ivRating);
 		tvDetailviewRatings = (TextView) findViewById(R.id.tvDetailviewRatings);
 		// ImageView ivDirections = (ImageView) findViewById(R.id.ivDirections);
@@ -97,7 +105,6 @@ public class DetailsActivity extends Activity {
 				try {
 					r = Restaurant.fromJson(response);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				setupRestaurant(r);
@@ -110,16 +117,16 @@ public class DetailsActivity extends Activity {
 		});
 	}
 
-	// phone call intent
+	// phone call intent, initiate the call.
 	public void callNumber(View v) {
-		Intent callIntent = new Intent(Intent.ACTION_DIAL);
+		Intent callIntent = new Intent(Intent.ACTION_CALL);
 		callIntent.setData(Uri.parse("tel:" + phoneNumber));
 		startActivity(callIntent);
 	}
 
 	// website intent
 	public void openSite(View v) {
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
 		startActivity(browserIntent);
 	}
 
@@ -134,6 +141,14 @@ public class DetailsActivity extends Activity {
 		data = String.format("%s?z=%s", data, zoomLevel);
 
 		intent.setData(Uri.parse(data));
+		startActivity(intent);
+	}
+
+	public void launchGoogleMaps(View v) {
+		String format = "geo:0,0?q=" + direction;
+		Uri uri = Uri.parse(format);
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
 

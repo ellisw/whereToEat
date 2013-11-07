@@ -10,4 +10,16 @@
     <string name="title_details">Details</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="categories">
+        <item name="maxicon">Maxican</item>
+        <item name="cafe">Cafe</item>
+        <item name="bar">Bar</item>
+        <item name="Chinese">Chinese</item>
+        <item name="indian">Indian</item>
+        <item name="thai">Thai</item>
+        <item name="italian">Italian</item>
+        <item name="Pizza">Pizza</item>
+        <item name="burger">Burger</item>
+    </string-array>
+
 </resources>

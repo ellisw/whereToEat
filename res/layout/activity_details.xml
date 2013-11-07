@@ -122,7 +122,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:clickable="true"
-                            android:onClick="getMap"
+                            android:onClick="launchGoogleMaps"
                             android:text="Get Directions"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@android:color/holo_blue_dark"

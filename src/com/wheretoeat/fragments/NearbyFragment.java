@@ -36,6 +36,7 @@ public class NearbyFragment extends Fragment {
 
 	public interface OnMapUpdateListener {
 		public void onMapUpdate(List<Restaurant> resList);
+
 		public void onDetailSelected(String ref);
 	}
 
@@ -56,11 +57,10 @@ public class NearbyFragment extends Fragment {
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) {
 				Log.d("TESTING", view.getTag().toString());
 				callBackHandler.onDetailSelected(view.getTag().toString());
-//				fetchDetails(view.getTag().toString());
+				// fetchDetails(view.getTag().toString());
 			}
 		});
 	}

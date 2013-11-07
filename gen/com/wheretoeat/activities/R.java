@@ -8,6 +8,9 @@
 package com.wheretoeat.activities;
 
 public final class R {
+    public static final class array {
+        public static final int categories=0x7f080000;
+    }
     public static final class attr {
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
@@ -187,8 +190,8 @@ containing a value of this type.
     }
     public static final class id {
         public static final int ImageView01=0x7f050015;
-        public static final int action_filter=0x7f050036;
-        public static final int action_settings=0x7f050035;
+        public static final int action_filter=0x7f050037;
+        public static final int action_settings=0x7f050036;
         public static final int hybrid=0x7f050004;
         public static final int imgBtnMap=0x7f05001b;
         public static final int imgBtnPager=0x7f05001f;
@@ -200,8 +203,9 @@ containing a value of this type.
         public static final int lbl_price=0x7f050020;
         public static final int lbl_show_visited=0x7f050026;
         public static final int lvReviewsList=0x7f050017;
-        public static final int lv_nearby_res=0x7f05002a;
-        public static final int lv_toprated_res=0x7f050030;
+        public static final int lv_categories=0x7f05002a;
+        public static final int lv_nearby_res=0x7f05002b;
+        public static final int lv_toprated_res=0x7f050031;
         public static final int main_layout=0x7f050018;
         public static final int map=0x7f05001a;
         public static final int map_fragment_container=0x7f050019;
@@ -225,21 +229,21 @@ containing a value of this type.
         public static final int tvAddress=0x7f050007;
         public static final int tvCallLabel=0x7f050012;
         public static final int tvCategories=0x7f050005;
-        public static final int tvDate=0x7f050032;
+        public static final int tvDate=0x7f050033;
         public static final int tvDetailviewRatings=0x7f050009;
         public static final int tvDirectionsLabel=0x7f05000f;
-        public static final int tvName=0x7f050033;
+        public static final int tvName=0x7f050034;
         public static final int tvPhoneNumber=0x7f050013;
-        public static final int tvRating=0x7f050034;
+        public static final int tvRating=0x7f050035;
         public static final int tvRestaurantName=0x7f050006;
         public static final int tvReviewCount=0x7f05000b;
         public static final int tvSeeMenu=0x7f050016;
-        public static final int tvText=0x7f050031;
-        public static final int tv_body=0x7f05002e;
-        public static final int tv_miles=0x7f05002d;
-        public static final int tv_name=0x7f05002c;
-        public static final int tv_numbers=0x7f05002b;
-        public static final int tv_ratings=0x7f05002f;
+        public static final int tvText=0x7f050032;
+        public static final int tv_body=0x7f05002f;
+        public static final int tv_miles=0x7f05002e;
+        public static final int tv_name=0x7f05002d;
+        public static final int tv_numbers=0x7f05002c;
+        public static final int tv_ratings=0x7f050030;
         public static final int viewPagerCategory=0x7f05001d;
     }
     public static final class layout {
@@ -256,9 +260,9 @@ containing a value of this type.
         public static final int review_item=0x7f03000a;
     }
     public static final class menu {
-        public static final int details=0x7f090000;
-        public static final int login=0x7f090001;
-        public static final int main=0x7f090002;
+        public static final int details=0x7f0a0000;
+        public static final int login=0x7f0a0001;
+        public static final int main=0x7f0a0002;
     }
     public static final class string {
         public static final int action_filter=0x7f060016;
@@ -370,11 +374,11 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int AppTheme=0x7f090001;
     }
     public static final class styleable {
         /** Attributes that can be used with a MapAttrs.

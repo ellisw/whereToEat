@@ -82,28 +82,28 @@ public class Restaurant {
 
 		return resList;
 	}
-	
-	public static Restaurant fromJson(JSONObject resultsObj) throws JSONException{
+
+	public static Restaurant fromJson(JSONObject resultsObj) throws JSONException {
 		boolean isDetail = false;
-		if(resultsObj.has("result")){
+		if (resultsObj.has("result")) {
 			resultsObj = resultsObj.getJSONObject("result");
 			isDetail = true;
 		}
 		Restaurant res = new Restaurant();
 
-		try{
+		try {
 			JSONObject geometryObj = resultsObj.getJSONObject("geometry");
 			res.setLocation(getLocation(geometryObj));
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		JSONArray catArray = resultsObj.getJSONArray("types");
-		res.setResUrl(resultsObj.optString("icon"));
+		res.setResUrl(resultsObj.optString("website"));
 		res.setName(resultsObj.getString("name"));
 		res.setRating(resultsObj.getString("rating"));
 		res.setResId(resultsObj.getString("reference"));
-		if(isDetail){
+		if (isDetail) {
 			res.setPhoneNumber(resultsObj.getString("formatted_phone_number"));
 			res.setAddress(resultsObj.getString("formatted_address"));
 			res.setReviews(Review.fromJSON(resultsObj.getJSONArray("reviews")));

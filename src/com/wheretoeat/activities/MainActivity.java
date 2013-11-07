@@ -283,6 +283,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onDetailSelected(String ref) {
 		Intent i = new Intent(this, DetailsActivity.class);
 		i.putExtra("ref", ref);
+		
 		startActivityForResult(i, DETAILS_REQUEST_CODE);
 	}
 

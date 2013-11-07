@@ -15,9 +15,10 @@ import android.location.Location;
 import android.location.LocationManager;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GoogleMapHelper {
@@ -43,22 +44,7 @@ public class GoogleMapHelper {
 
 	public static void markLocationOnMap(double[] coordinates, GoogleMap googleMap, String title, Context context, int counter) {
 
-		// double[] d = GoogleMapHelper.getCurrentlocation(getBaseContext());
 		LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
-		// BitmapDescriptor descriptor = null;
-		// if (title.equalsIgnoreCase("CurrentLocation")) {
-		// descriptor =
-		// BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
-		// } else {
-		// descriptor =
-		// BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
-		// }
-
-		// googleMap.addMarker(new
-		// MarkerOptions().position(currentLocation).title(title).icon(descriptor));
-
-		// googleMap.addMarker(new
-		// MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromAsset(getUrl("1"))));
 		Bitmap bmp = null;
 		if (counter > 0) {
 			bmp = drawTextToBitmap(context, counter + "");
@@ -66,7 +52,24 @@ public class GoogleMapHelper {
 			bmp = drawTextToBitmap(context, "");
 		}
 
-		googleMap.addMarker(new MarkerOptions().position(currentLocation).title(title).icon(BitmapDescriptorFactory.fromBitmap(bmp)));
+		MarkerOptions markerOptions = new MarkerOptions();
+		markerOptions.position(currentLocation);
+		markerOptions.title(title);
+		if (title.equalsIgnoreCase("This is You")) {
+			markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+		} else {
+			markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bmp));
+		}
+
+		googleMap.addMarker(markerOptions);
+
+		googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				marker.getId();
+				return false;
+			}
+		});
 	}
 
 	public static Bitmap drawTextToBitmap(Context mContext, String mText) {
